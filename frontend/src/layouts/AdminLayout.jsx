@@ -26,13 +26,13 @@ const AdminLayout = () => {
         console.error(err);
       }
     };
-    
+
     fetchUnreadCount();
-    
+
     // Periodically check for new messages every 15 seconds
     const interval = setInterval(fetchUnreadCount, 15000);
     window.addEventListener('messages_updated', fetchUnreadCount);
-    
+
     return () => {
       clearInterval(interval);
       window.removeEventListener('messages_updated', fetchUnreadCount);
@@ -54,23 +54,22 @@ const AdminLayout = () => {
 
   return (
     <div className="flex h-screen bg-brand-darker text-brand-text overflow-hidden">
-      
+
       {/* Sidebar */}
       <aside className="w-64 bg-brand-dark border-r border-white/5 flex flex-col hidden md:flex">
         <div className="h-20 flex items-center px-6 border-b border-white/5">
           <Hexagon className="h-8 w-8 text-brand-blue" />
-          <span className="ml-3 text-xl font-bold text-white">Nexus<span className="text-brand-blue">Admin</span></span>
+          <span className="ml-3 text-xl font-bold text-white">Erbil<span className="text-brand-blue">Admin</span></span>
         </div>
-        
+
         <nav className="flex-1 px-4 py-8 space-y-2">
           {navItems.map((item) => (
             <NavLink
               key={item.name}
               to={item.path}
               end={item.end}
-              className={({ isActive }) => 
-                `flex items-center justify-between px-4 py-3 rounded-lg transition-colors font-medium ${
-                  isActive ? 'bg-brand-blue text-white' : 'text-brand-muted hover:bg-white/5 hover:text-white'
+              className={({ isActive }) =>
+                `flex items-center justify-between px-4 py-3 rounded-lg transition-colors font-medium ${isActive ? 'bg-brand-blue text-white' : 'text-brand-muted hover:bg-white/5 hover:text-white'
                 }`
               }
             >
@@ -97,8 +96,8 @@ const AdminLayout = () => {
               <span className="text-xs text-brand-muted">{role === 'SUPER_ADMIN' ? 'Süper Admin' : 'Editör'}</span>
             </div>
           </div>
-          
-          <button 
+
+          <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-3 w-full text-left rounded-lg text-red-400 hover:bg-red-500/10 transition-colors font-medium"
           >
@@ -123,10 +122,10 @@ const AdminLayout = () => {
 
         {/* Dynamic Page Content */}
         <main className="flex-1 overflow-y-auto p-6 lg:p-10 relative">
-           <Outlet />
+          <Outlet />
         </main>
       </div>
-      
+
     </div>
   );
 };

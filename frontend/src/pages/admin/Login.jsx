@@ -23,16 +23,16 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     setLoading(true);
-    
+
     try {
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
       const response = await axios.post(`${baseUrl}/admin/login`, data);
-      
+
       const { token, role, name } = response.data;
       localStorage.setItem('adminToken', token);
       localStorage.setItem('adminRole', role);
       if (name) localStorage.setItem('adminName', name);
-      
+
       toast.success('Başarıyla giriş yapıldı!');
       navigate('/admin');
     } catch (err) {
@@ -44,7 +44,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-brand-darker flex items-center justify-center p-4">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md"
@@ -52,7 +52,7 @@ const Login = () => {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Hexagon className="h-10 w-10 text-brand-blue" />
-            <span className="text-2xl font-bold tracking-tight text-white">Nexus<span className="text-brand-blue">Tech</span> Yönetim</span>
+            <span className="text-2xl font-bold tracking-tight text-white">Erbil<span className="text-brand-blue">Tech</span> Yönetim</span>
           </div>
           <p className="text-brand-muted">Admin paneline erişim sağlamak için giriş yapın.</p>
         </div>

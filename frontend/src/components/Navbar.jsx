@@ -28,7 +28,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center gap-2">
             <Hexagon className="h-8 w-8 text-brand-blue" />
-            <span className="text-xl font-bold tracking-tight text-white">Nexus<span className="text-brand-blue">Tech</span></span>
+            <span className="text-xl font-bold tracking-tight text-white">Erbil<span className="text-brand-blue">Tech</span></span>
           </div>
 
           {/* Desktop Nav */}
@@ -53,7 +53,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Nav */}
-      <motion.div 
+      <motion.div
         initial={false}
         animate={{ height: mobileMenuOpen ? 'auto' : 0, opacity: mobileMenuOpen ? 1 : 0 }}
         className="md:hidden overflow-hidden bg-brand-dark border-t border-white/10"
