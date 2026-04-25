@@ -12,6 +12,7 @@ const Messages = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [deleteId, setDeleteId] = useState(null);
   const [activeTab, setActiveTab] = useState('inbox');
+  const [error, setError] = useState(null);
   
   // Pagination States
   const [page, setPage] = useState(1);
@@ -30,8 +31,9 @@ const Messages = () => {
     return () => clearTimeout(handler);
   }, [searchTerm]);
 
-  const fetchMessages = async () => {
+  const fetchMessages = async (signal) => {
     setLoading(true);
+    setError(null);
     try {
       const token = localStorage.getItem('adminToken');
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
@@ -39,7 +41,8 @@ const Messages = () => {
       
       const response = await axios.get(`${baseUrl}${endpoint}`, {
         params: { page, limit, search: debouncedSearchTerm },
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
+        signal
       });
       
       if (response.data && response.data.pagination) {
@@ -51,14 +54,21 @@ const Messages = () => {
         setMessages(response.data);
       }
     } catch (err) {
-      console.error(err);
+      if (axios.isCancel(err)) {
+        console.log('Request canceled', err.message);
+      } else {
+        console.error(err);
+        setError('Mesajlar yüklenirken bir bağlantı hatası oluştu. Lütfen tekrar deneyin.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchMessages();
+    const controller = new AbortController();
+    fetchMessages(controller.signal);
+    return () => controller.abort();
   }, [activeTab, page, debouncedSearchTerm]);
 
   const handleDelete = async (id) => {
@@ -237,6 +247,17 @@ const Messages = () => {
         {loading && messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
             <Loader2 className="w-8 h-8 text-brand-blue animate-spin" />
+          </div>
+        ) : error ? (
+          <div className="flex-1 flex flex-col items-center justify-center text-red-400 p-8 text-center">
+            <AlertCircle className="w-16 h-16 mb-4 opacity-50" />
+            <p className="text-lg">{error}</p>
+            <button 
+              onClick={() => fetchMessages()}
+              className="mt-4 px-4 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg transition-colors flex items-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" /> Tekrar Dene
+            </button>
           </div>
         ) : messages.length === 0 ? (
           <div className="flex-1 flex flex-col items-center justify-center text-brand-muted p-8 text-center">

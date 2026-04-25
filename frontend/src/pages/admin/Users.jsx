@@ -39,22 +39,29 @@ const Users = () => {
   const token = localStorage.getItem('adminToken');
   const currentUser = localStorage.getItem('adminName');
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (signal) => {
     try {
       const response = await axios.get(`${baseUrl}/admin/users`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token}` },
+        signal
       });
       setUsers(response.data);
     } catch (err) {
-      console.error(err);
-      toast.error('Kullanıcılar yüklenirken bir hata oluştu.');
+      if (axios.isCancel(err)) {
+        console.log('Request canceled', err.message);
+      } else {
+        console.error(err);
+        toast.error('Kullanıcılar yüklenirken bir hata oluştu.');
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUsers();
+    const controller = new AbortController();
+    fetchUsers(controller.signal);
+    return () => controller.abort();
   }, []);
 
   const openEditModal = (user) => {

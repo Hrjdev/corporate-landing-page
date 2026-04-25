@@ -10,7 +10,7 @@ const Dashboard = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
+  const fetchData = async (signal) => {
     setLoading(true);
     try {
       const token = localStorage.getItem('adminToken');
@@ -18,11 +18,11 @@ const Dashboard = () => {
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
       
       const requests = [
-        axios.get(`${baseUrl}/admin/stats`, { headers: { Authorization: `Bearer ${token}` } })
+        axios.get(`${baseUrl}/admin/stats`, { headers: { Authorization: `Bearer ${token}` }, signal })
       ];
       
       if (role === 'SUPER_ADMIN') {
-        requests.push(axios.get(`${baseUrl}/admin/logs`, { headers: { Authorization: `Bearer ${token}` } }));
+        requests.push(axios.get(`${baseUrl}/admin/logs`, { headers: { Authorization: `Bearer ${token}` }, signal }));
       }
       
       const responses = await Promise.all(requests);
@@ -32,14 +32,20 @@ const Dashboard = () => {
         setLogs(responses[1].data.data || responses[1].data);
       }
     } catch (err) {
-      console.error(err);
+      if (axios.isCancel(err)) {
+        console.log('Request canceled', err.message);
+      } else {
+        console.error(err);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    const controller = new AbortController();
+    fetchData(controller.signal);
+    return () => controller.abort();
   }, []);
 
   return (
