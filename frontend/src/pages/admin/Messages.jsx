@@ -58,7 +58,8 @@ const Messages = () => {
         console.log('Request canceled');
       } else {
         console.error(err);
-        setError('Mesajlar yüklenirken bir bağlantı hatası oluştu. Lütfen tekrar deneyin.');
+        const errorMsg = err.response ? `Sunucu Hatası (${err.response.status})` : `Bağlantı Hatası: ${err.message}`;
+        setError(errorMsg);
       }
     } finally {
       setLoading(false);
