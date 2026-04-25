@@ -19,17 +19,17 @@ const About = () => {
   return (
     <section id="about" className="py-24 bg-brand-dark/50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white">
-              Neden <span className="text-brand-blue">NexusTech?</span>
+              Neden <span className="text-brand-blue">ErbilTech?</span>
             </h2>
             <p className="text-brand-muted mb-6 leading-relaxed">
               Sektördeki 10 yılı aşkın tecrübemizle, kurumların dijital ihtiyaçlarını analiz ediyor, ölçeklenebilir ve güvenli çözümler üretiyoruz. Modern yazılım mimarileri ve çevik (agile) geliştirme süreçlerimizle projelerinizi zamanında teslim ediyoruz.
@@ -39,7 +39,7 @@ const About = () => {
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -51,7 +51,7 @@ const About = () => {
               <h3 className="text-xl font-semibold mb-2 text-white">Modern Mimari</h3>
               <p className="text-brand-muted text-sm scale-95 origin-left">En güncel teknolojilerle yüksek performanslı uygulamalar.</p>
             </motion.div>
-            
+
             <motion.div variants={itemVariants} className="glass-effect p-6 rounded-xl translate-y-0 sm:translate-y-8">
               <Globe2 className="w-10 h-10 text-brand-blue mb-4" />
               <h3 className="text-xl font-semibold mb-2 text-white">Global Standartlar</h3>

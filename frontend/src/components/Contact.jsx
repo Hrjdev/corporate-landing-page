@@ -16,17 +16,17 @@ const contactSchema = z.object({
 });
 
 const Contact = ({ settings }) => {
-  const email = settings?.contactEmail || "hello@nexustech.corp";
+  const email = settings?.contactEmail || "hello@erbiltech.corp";
   const phone = settings?.contactPhone || "+90 (212) 555 01 23";
   const address = settings?.contactAddress || "Teknoloji Vadisi, İnovasyon Cd. No:42 Kadıköy, İstanbul";
-  
+
   const { register, handleSubmit, reset, watch, formState: { errors, isSubmitting } } = useForm({
     resolver: zodResolver(contactSchema)
   });
-  
+
   const watchedSubject = watch('subject', '');
   const watchedMessage = watch('message', '');
-  
+
   const [submitStatus, setSubmitStatus] = useState(null); // 'success' | null
   const [recaptchaToken, setRecaptchaToken] = useState(null);
 
@@ -36,7 +36,7 @@ const Contact = ({ settings }) => {
         toast.error('Lütfen bot olmadığınızı doğrulayın.');
         return;
       }
-      
+
       const payload = { ...data, recaptchaToken };
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
       await axios.post(`${baseUrl}/contact`, payload);
@@ -58,9 +58,9 @@ const Contact = ({ settings }) => {
   return (
     <section id="contact" className="py-24 bg-brand-dark/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         <div className="text-center mb-16">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -68,7 +68,7 @@ const Contact = ({ settings }) => {
           >
             Bize <span className="text-brand-blue">Ulaşın</span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -80,9 +80,9 @@ const Contact = ({ settings }) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
-          
+
           {/* Contact Info */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -114,7 +114,7 @@ const Contact = ({ settings }) => {
           </motion.div>
 
           {/* Contact Form */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -124,7 +124,7 @@ const Contact = ({ settings }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-brand-text/80 mb-2">Ad Soyad</label>
-                  <input 
+                  <input
                     {...register("name")}
                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-brand-muted/50 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
                     placeholder="John Doe"
@@ -133,7 +133,7 @@ const Contact = ({ settings }) => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-brand-text/80 mb-2">E-Posta</label>
-                  <input 
+                  <input
                     {...register("email")}
                     className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-brand-muted/50 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
                     placeholder="john@example.com"
@@ -147,7 +147,7 @@ const Contact = ({ settings }) => {
                   <label className="block text-sm font-medium text-brand-text/80">Konu</label>
                   <span className="text-xs text-brand-muted">{watchedSubject.length}/200</span>
                 </div>
-                <input 
+                <input
                   {...register("subject")}
                   maxLength={200}
                   className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-brand-muted/50 focus:outline-none focus:ring-2 focus:ring-brand-blue transition-all"
@@ -160,7 +160,7 @@ const Contact = ({ settings }) => {
                   <label className="block text-sm font-medium text-brand-text/80">Mesajınız</label>
                   <span className="text-xs text-brand-muted">{watchedMessage.length}/500</span>
                 </div>
-                <textarea 
+                <textarea
                   {...register("message")}
                   rows="4"
                   maxLength={500}
@@ -178,7 +178,7 @@ const Contact = ({ settings }) => {
                 />
               </div>
 
-              <button 
+              <button
                 disabled={isSubmitting}
                 className="w-full py-4 bg-brand-blue hover:bg-brand-lightBlue text-white rounded-lg flex items-center justify-center gap-2 font-medium transition-colors disabled:opacity-70"
               >
@@ -189,7 +189,7 @@ const Contact = ({ settings }) => {
 
             <AnimatePresence>
               {submitStatus === 'success' && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
@@ -201,7 +201,7 @@ const Contact = ({ settings }) => {
                 </motion.div>
               )}
               {submitStatus === 'rate_limit' && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}

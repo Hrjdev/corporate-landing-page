@@ -14,7 +14,7 @@ async function main() {
       id: 1,
       heroTitle: 'Kurumsal Vizyonunuzu Dijitale Taşıyın',
       heroSubtitle: 'Modern teknolojiler ve yenilikçi çözümlerle işletmenizin dijital dönüşüm yolculuğunda güvenilir teknoloji ortağınız.',
-      contactEmail: 'hello@nexustech.corp',
+      contactEmail: 'hello@erbiltech.corp',
       contactPhone: '+90 (212) 555 01 23',
       contactAddress: 'Teknoloji Vadisi, İnovasyon Cd. No:42 Kadıköy, İstanbul'
     }

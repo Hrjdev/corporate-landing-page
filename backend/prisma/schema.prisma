@@ -35,7 +35,7 @@ model SiteContent {
   id             Int    @id @default(1)
   heroTitle      String @default("Kurumsal Vizyonunuzu Dijitale Taşıyın")
   heroSubtitle   String @default("Modern teknolojiler ve yenilikçi çözümlerle işletmenizin dijital dönüşüm yolculuğunda güvenilir teknolojı ortağınız.")
-  contactEmail   String @default("hello@nexustech.corp")
+  contactEmail   String @default("hello@erbiltech.corp")
   contactPhone   String @default("+90 (212) 555 01 23")
   contactAddress String @default("Teknoloji Vadisi, İnovasyon Cd. No:42 Kadıköy, İstanbul")
 }
