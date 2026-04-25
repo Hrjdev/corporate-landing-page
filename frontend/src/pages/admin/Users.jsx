@@ -47,8 +47,8 @@ const Users = () => {
       });
       setUsers(response.data);
     } catch (err) {
-      if (axios.isCancel(err)) {
-        console.log('Request canceled', err.message);
+      if ((signal && signal.aborted) || axios.isCancel(err) || err.name === 'CanceledError' || err.name === 'AbortError') {
+        console.log('Request canceled');
       } else {
         console.error(err);
         toast.error('Kullanıcılar yüklenirken bir hata oluştu.');

@@ -32,8 +32,8 @@ const Dashboard = () => {
         setLogs(responses[1].data.data || responses[1].data);
       }
     } catch (err) {
-      if (axios.isCancel(err)) {
-        console.log('Request canceled', err.message);
+      if ((signal && signal.aborted) || axios.isCancel(err) || err.name === 'CanceledError' || err.name === 'AbortError') {
+        console.log('Request canceled');
       } else {
         console.error(err);
       }
